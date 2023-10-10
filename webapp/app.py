@@ -17,7 +17,8 @@ if not os.path.exists(app.config['RESULT_FOLDER']):
 
 # Load the pre-trained model
 model = tf.keras.models.load_model('CADDetection.h5')
-class_names = ['BED-DOUBLE', 'BED-SINGLE', 'DOOR-DOUBLE', 'DOOR-SINGLE', 'DOOR-WINDOWED', 'SHOWER', 'SINK', 'SOFA-CORNER', 'SOFA-ONE', 'SOFA-THREE', 'SOFA-TWO', 'TABLE-DINNER', 'TOILET', 'WASHBASIN', 'WINDOW']
+class_names = ['BED-DOUBLE', 'BED-SINGLE', 'DOOR-DOUBLE', 'DOOR-SINGLE', 'DOOR-WINDOWED', 'SHOWER', 'SINK',
+                'SOFA-CORNER', 'SOFA-ONE', 'SOFA-THREE', 'SOFA-TWO', 'TABLE-DINNER', 'TOILET', 'WASHBASIN', 'WINDOW']
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -38,23 +39,21 @@ def index():
         
         if image is not None:
             predictions = model.predict(image)
-            for box in predictions:
-                class_name = class_names[np.argmax(box)]
-                # x, y, w, h = box
-                # image = cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            class_name = class_names[np.argmax(predictions[0])]
+            num = predictions[0][np.argmax(predictions[0])]*100
         
         result_filename = os.path.join(app.config['RESULT_FOLDER'], file.filename)
         cv2.imwrite(result_filename, image)
 
         url = url_for('result', filename=file.filename)
 
-        return render_template('index.html', image=url)
+        return render_template('index.html', image=url, name=class_name, num=num)
 
     return render_template('index.html')
 
 @app.route('/result/<filename>')
 def result(filename):
-    return send_from_directory(app.config['RESULT_FOLDER'], filename)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True)

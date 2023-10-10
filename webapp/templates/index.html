@@ -40,10 +40,11 @@
         </div>
     </div>
     {% if image: %}
-    <div class="card mx-auto col-11 mt-4">
+    <div class="card mx-auto col-5 mt-4">
         <div class="card-header">Result</div>
-        <div class="card-body">
-            <img width="100%" src="{{image}}" alt="NoImage" />
+        <div class="card-body text-center">
+            <img width="250px" src="{{image}}" alt="NoImage" />
+            <h3 class="mt-2">{{name}} {{"%.2f" % num}}%</h3>
         </div>
     </div>
     {% endif %}
