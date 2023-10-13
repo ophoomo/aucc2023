@@ -16,3 +16,5 @@ https://www.kaggle.com/datasets/bayramakgl/furnishing-dataset
 - [@ophoomo](https://github.com/ophoomo)
 - [@icesuaraara](https://github.com/icesuaraara)
 
+## Preview
+<img src="https://raw.githubusercontent.com/ophoomo/aucc2023/master/preview.png" alt="preview app" />
